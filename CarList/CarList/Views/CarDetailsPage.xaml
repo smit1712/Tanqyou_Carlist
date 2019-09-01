@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CarList"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="CarList.Views.CarDetailsPage">
+            
+            <ContentPage.Content >
+
+        <StackLayout BindingContext="{Binding DetailedCar}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+
+            <Label Text="{Binding Merk}" TextColor="#f35e20" />
+            <Label Text="{Binding Type}" TextColor="#f35e20" />
+            <Label Text="{Binding FormattedPrice}" TextColor="#f35e20" />
+            <Image Source="{Binding Afbeelding}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
