@@ -26,7 +26,6 @@ namespace CarList.ViewModels
                 SetProperty(ref _DetailedCar, value);
             }
         }
-        public string Test = "halloworld";
         public DelegateCommand NavigateCommand =>
             _navigateCommand ?? (_navigateCommand = new DelegateCommand(ExecuteNavigationCommand));
 
@@ -34,6 +33,8 @@ namespace CarList.ViewModels
         {
             Title = "CarDetailsPage";
             _navigationService = navigationService;
+
+
         }
         async void ExecuteNavigationCommand()
         {
@@ -46,7 +47,6 @@ namespace CarList.ViewModels
 
         public void OnNavigatedTo(INavigationParameters parameters)
         {
-
             CarId = parameters.GetValue<Guid>("ID");
             carService = parameters.GetValue<CarService>("CarService");
             DetailedCar = carService.GetCarDetails(CarId);

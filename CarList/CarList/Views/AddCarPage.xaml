@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage  
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CarList"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"            
+             x:Class="CarList.Views.AddCarPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Nieuwe auto"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="CenterAndExpand"/>
+            <Label Text="Verkeerd Kentekenbord" TextColor="Red"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="CenterAndExpand"
+                   IsVisible="{Binding IsValid}"/>
+
+            <Entry Placeholder="nieuw Kentekenbord" VerticalOptions="CenterAndExpand" Text="{Binding Kentekenbord , Mode=TwoWay}">
+                <Entry.Behaviors>
+                    <local:ValidateLicensePlateBehavior  IsValid="{Binding IsValid}"/>
+                </Entry.Behaviors>
+            </Entry>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

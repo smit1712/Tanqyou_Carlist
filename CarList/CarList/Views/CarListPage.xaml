@@ -10,9 +10,10 @@
 
     <StackLayout>
         <!-- Place new controls here -->
-        <Label Text="Welcome to CarListPage!" 
+        <Label x:Name="DeviceType" Text="{Binding DeviceType}" 
            HorizontalOptions="Center"
-           VerticalOptions="Start" />
+           VerticalOptions="StartAndExpand" 
+               TextColor="#503026"/>
         <ListView x:Name="Carlist" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" ItemsSource="{Binding CarCollection}" SelectedItem="{Binding SelectedCar}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -31,7 +32,7 @@
                 <local:ItemSelectedToCommandBehavior Command="{Binding SelectCommand}"/>
             </ListView.Behaviors>
         </ListView>
-        <Button x:Name="navigationButton" Text="CarDetails" HorizontalOptions="Center" VerticalOptions="End" Command="{Binding NavigateCommand}"></Button>
+        <Button x:Name="navigationButton" Text="Voeg auto toe" HorizontalOptions="Center" VerticalOptions="End" Command="{Binding AddCarCommand}"></Button>
     </StackLayout>
 
 </ContentPage>

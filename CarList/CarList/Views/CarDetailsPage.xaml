@@ -5,7 +5,8 @@
              xmlns:local="clr-namespace:CarList"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="CarList.Views.CarDetailsPage">
+             x:Class="CarList.Views.CarDetailsPage"
+    NavigationPage.BackButtonTitle="Back">
             
             <ContentPage.Content >
 
@@ -17,4 +18,5 @@
             <Image Source="{Binding Afbeelding}"/>
         </StackLayout>
     </ContentPage.Content>
+    
 </ContentPage>

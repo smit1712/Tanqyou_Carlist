@@ -13,6 +13,7 @@ namespace CarList.Views
 		public CarDetailsPage ()
 		{
             InitializeComponent();
+            NavigationPage.SetHasBackButton(this, true);
         }
 	}
 }

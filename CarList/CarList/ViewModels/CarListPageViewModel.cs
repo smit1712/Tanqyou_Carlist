@@ -3,13 +3,14 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using Unity;
 using Xamarin.Forms;
 
 namespace CarList.ViewModels
 {
-    class CarListPageViewModel : BindableBase, INavigationAware
+    class CarListPageViewModel : BindableBase, INavigationAware, INotifyPropertyChanged
     {
         private string _title;
         public string Title
@@ -17,21 +18,29 @@ namespace CarList.ViewModels
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
+        private string _DeviceType = "No type known";
+        public string DeviceType
+        {
+            get { return _DeviceType; }
+            set { SetProperty(ref _DeviceType, value); }
+        }
         private DelegateCommand _navigateCommand;
         private INavigationService _navigationService;
-        private CarService carService;
+        private ICarService _carService;
+        private IDeviceService _deviceService;
         public ObservableCollection<Car> CarCollection { get; set; }
         public Car SelectedCar { get; set; }
+
         public DelegateCommand NavigateCommand =>
             _navigateCommand ?? (_navigateCommand = new DelegateCommand(ExecuteNavigationCommand));
 
-        public CarListPageViewModel(INavigationService navigationService)
+        public CarListPageViewModel(INavigationService navigationService, ICarService carService, IDeviceService deviceService)
         {
-
             Title = "CarListPage";
             _navigationService = navigationService;
             CarCollection = new ObservableCollection<Car>();
-
+            _carService = carService;
+            _deviceService = deviceService;
         }
         async void ExecuteNavigationCommand()
         {
@@ -46,22 +55,28 @@ namespace CarList.ViewModels
         public void OnNavigatedTo(INavigationParameters parameters)
         {
             UnityContainer unity = parameters.GetValue<UnityContainer>("UnityContainer");
-            carService = unity.Resolve<CarService>();
-
-            foreach (Car c in carService.GetCars())
+            _carService = unity.Resolve<CarService>();
+            DeviceType = "Wat een mooie " + _deviceService.GetDeviceOS() + " telefoon heb jij! :)’";
+            foreach (Car c in _carService.GetCars())
             {
                 CarCollection.Add(c);
             }
         }
-        public ICommand SelectCommand => new Command(() =>
+
+        public ICommand AddCarCommand => new Command(() =>
         {
-            Console.WriteLine(SelectedCar);
-            NavigationParameters np = new NavigationParameters
-            {
-                { "ID", SelectedCar.Id },
-                { "CarService", carService}
-            };
-            var result = _navigationService.NavigateAsync("CarDetailsPage", np);
+            
+            var result = _navigationService.NavigateAsync("AddCarPage");
         });
+
+        public ICommand SelectCommand => new Command(() =>
+            {
+                NavigationParameters np = new NavigationParameters
+                {
+                { "ID", SelectedCar.Id },
+                { "CarService", _carService}
+                };
+                var result = _navigationService.NavigateAsync("CarDetailsPage", np);
+            });
     }
 }
